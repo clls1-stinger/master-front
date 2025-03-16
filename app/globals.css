@@ -1,0 +1,203 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+
+    --primary: 142.1 76.2% 36.3%;
+    --primary-foreground: 355.7 100% 97.3%;
+
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 142.1 76.2% 36.3%;
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 20 14.3% 4.1%;
+    --foreground: 0 0% 95%;
+
+    --card: 24 9.8% 10%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 142.1 70.6% 45.3%;
+    --primary-foreground: 144.9 80.4% 10%;
+
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 85.7% 97.3%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 142.4 71.8% 29.2%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  /* Morphic Gradient Background */
+  .bg-morphic-gradient {
+    @apply bg-gradient-to-br from-background to-muted/30;
+    background-attachment: fixed;
+  }
+
+  /* Main Container */
+  .morphic-container {
+    @apply min-h-screen p-4 md:p-8;
+  }
+
+  /* Morphic Cards */
+  .morphic-card {
+    @apply rounded-xl p-6 backdrop-blur-sm border border-white/10 shadow-xl;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.03));
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025), inset 0 1px 0 0
+      rgba(255, 255, 255, 0.05);
+  }
+
+  .dark .morphic-card {
+    background: linear-gradient(145deg, rgba(30, 30, 30, 0.5), rgba(20, 20, 20, 0.3));
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1), inset 0 1px 0 0
+      rgba(255, 255, 255, 0.02);
+  }
+
+  /* Morphic Header */
+  .morphic-header {
+    @apply rounded-xl p-6 backdrop-blur-sm border border-white/10 shadow-xl;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025), inset 0 1px 0 0
+      rgba(255, 255, 255, 0.08);
+  }
+
+  .dark .morphic-header {
+    background: linear-gradient(145deg, rgba(40, 40, 40, 0.5), rgba(25, 25, 25, 0.3));
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1), inset 0 1px 0 0
+      rgba(255, 255, 255, 0.03);
+  }
+
+  /* Morphic Stat Cards */
+  .morphic-stat-card {
+    @apply rounded-xl p-4 backdrop-blur-sm border border-white/10 shadow-xl;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.025), inset 0 1px 0 0
+      rgba(255, 255, 255, 0.05);
+  }
+
+  .dark .morphic-stat-card {
+    background: linear-gradient(145deg, rgba(30, 30, 30, 0.4), rgba(20, 20, 20, 0.2));
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15), 0 2px 4px -1px rgba(0, 0, 0, 0.1), inset 0 1px 0 0
+      rgba(255, 255, 255, 0.02);
+  }
+
+  /* Morphic Icon */
+  .morphic-icon {
+    @apply shadow-sm;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  }
+
+  .dark .morphic-icon {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  }
+
+  /* Morphic Item */
+  .morphic-item {
+    @apply border border-transparent bg-white/5 backdrop-blur-sm;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transition: all 0.2s ease;
+  }
+
+  .morphic-item:hover {
+    @apply bg-white/10 border-white/20;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .dark .morphic-item {
+    @apply bg-black/20;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  }
+
+  .dark .morphic-item:hover {
+    @apply bg-black/30 border-white/10;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+
+  /* Morphic Cell */
+  .morphic-cell {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .dark .morphic-cell {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  }
+
+  /* Morphic Pill */
+  .morphic-pill {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-sm font-medium transition-colors hover:opacity-80;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .dark .morphic-pill {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+
+  /* Morphic Tooltip */
+  .morphic-tooltip {
+    @apply backdrop-blur-sm border border-white/10;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  }
+
+  .dark .morphic-tooltip {
+    background: linear-gradient(145deg, rgba(40, 40, 40, 0.9), rgba(20, 20, 20, 0.8));
+  }
+
+  /* Morphic Dropdown */
+  .morphic-dropdown {
+    @apply backdrop-blur-sm border border-white/10;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  }
+
+  .dark .morphic-dropdown {
+    background: linear-gradient(145deg, rgba(40, 40, 40, 0.9), rgba(20, 20, 20, 0.8));
+  }
+}
+
