@@ -29,6 +29,7 @@ export default function NewCategoryPage() {
       await createCategory({
         name: formData.name,
         description: formData.description,
+        creation: new Date(),
       })
 
       toast({

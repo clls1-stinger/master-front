@@ -11,14 +11,7 @@ import { fetchNotes, deleteNote } from "@/lib/data"
 import { formatDistanceToNow } from "@/lib/utils"
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
-
-type Note = {
-  id: number
-  title: string
-  content: string
-  creation: string
-  categories: { id: number; name: string }[]
-}
+import type { Note } from "@/lib/api"
 
 export function NoteList() {
   const [notes, setNotes] = useState<Note[]>([])
@@ -117,7 +110,7 @@ export function NoteList() {
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     className="text-destructive focus:text-destructive"
-                    onClick={() => handleDelete(note.id)}
+                    onClick={() => note.id && handleDelete(note.id)}
                   >
                     <Trash className="mr-2 h-4 w-4" />
                     Delete
@@ -125,11 +118,13 @@ export function NoteList() {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-            <CardDescription>Created {formatDistanceToNow(new Date(note.creation))}</CardDescription>
+            <CardDescription>
+              Created {note.creation ? formatDistanceToNow(new Date(note.creation)) : "recently"}
+            </CardDescription>
           </CardHeader>
           <CardContent className="flex-grow">
-            <p className="text-sm line-clamp-4 whitespace-pre-line">{note.content}</p>
-            {note.categories.length > 0 && (
+            <p className="text-sm line-clamp-4 whitespace-pre-line">{note.note}</p>
+            {note.categories && note.categories.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-2">
                 {note.categories.map((category) => (
                   <Badge key={category.id} variant="outline">

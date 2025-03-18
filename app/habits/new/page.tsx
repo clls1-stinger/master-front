@@ -2,24 +2,44 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { MultiSelect } from "@/components/multi-select"
-import { createHabit } from "@/lib/data"
+import { createHabit, fetchCategories } from "@/lib/data"
 import { useToast } from "@/hooks/use-toast"
+import type { Category } from "@/lib/api"
 
 export default function NewHabitPage() {
   const router = useRouter()
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
+  const [categories, setCategories] = useState<Category[]>([])
   const [formData, setFormData] = useState({
     name: "",
     categories: [] as { value: string; label: string }[],
   })
+
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const categoriesData = await fetchCategories()
+        setCategories(categoriesData)
+      } catch (error) {
+        console.error("Failed to load categories:", error)
+        toast({
+          title: "Error",
+          description: "Failed to load categories. Please try again.",
+          variant: "destructive",
+        })
+      }
+    }
+
+    loadCategories()
+  }, [toast])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -30,6 +50,7 @@ export default function NewHabitPage() {
       await createHabit({
         name: formData.name,
         categoryIds,
+        creation: new Date(),
       })
 
       toast({
@@ -50,13 +71,10 @@ export default function NewHabitPage() {
     }
   }
 
-  // Mock categories for the demo
-  const categoryOptions = [
-    { value: "1", label: "Work" },
-    { value: "2", label: "Personal" },
-    { value: "3", label: "Health" },
-    { value: "4", label: "Learning" },
-  ]
+  const categoryOptions = categories.map((category) => ({
+    value: category.id?.toString() || "",
+    label: category.name,
+  }))
 
   return (
     <div className="p-4 md:p-8">

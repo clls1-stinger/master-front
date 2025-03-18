@@ -10,13 +10,7 @@ import { fetchCategories, deleteCategory } from "@/lib/data"
 import { formatDistanceToNow } from "@/lib/utils"
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
-
-type Category = {
-  id: number
-  name: string
-  description: string
-  creation: string
-}
+import type { Category } from "@/lib/api"
 
 export function CategoryList() {
   const [categories, setCategories] = useState<Category[]>([])
@@ -115,7 +109,7 @@ export function CategoryList() {
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     className="text-destructive focus:text-destructive"
-                    onClick={() => handleDelete(category.id)}
+                    onClick={() => category.id && handleDelete(category.id)}
                   >
                     <Trash className="mr-2 h-4 w-4" />
                     Delete
@@ -123,7 +117,9 @@ export function CategoryList() {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-            <CardDescription>Created {formatDistanceToNow(new Date(category.creation))}</CardDescription>
+            <CardDescription>
+              Created {category.creation ? formatDistanceToNow(new Date(category.creation)) : "recently"}
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-sm">{category.description}</p>

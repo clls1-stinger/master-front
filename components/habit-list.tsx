@@ -11,13 +11,7 @@ import { fetchHabits, deleteHabit } from "@/lib/data"
 import { formatDistanceToNow } from "@/lib/utils"
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
-
-type Habit = {
-  id: number
-  name: string
-  creation: string
-  categories: { id: number; name: string }[]
-}
+import type { Habit } from "@/lib/api"
 
 export function HabitList() {
   const [habits, setHabits] = useState<Habit[]>([])
@@ -116,7 +110,7 @@ export function HabitList() {
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     className="text-destructive focus:text-destructive"
-                    onClick={() => handleDelete(habit.id)}
+                    onClick={() => habit.id && handleDelete(habit.id)}
                   >
                     <Trash className="mr-2 h-4 w-4" />
                     Delete
@@ -124,10 +118,12 @@ export function HabitList() {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-            <CardDescription>Created {formatDistanceToNow(new Date(habit.creation))}</CardDescription>
+            <CardDescription>
+              Created {habit.creation ? formatDistanceToNow(new Date(habit.creation)) : "recently"}
+            </CardDescription>
           </CardHeader>
           <CardContent>
-            {habit.categories.length > 0 && (
+            {habit.categories && habit.categories.length > 0 && (
               <div className="flex flex-wrap gap-2">
                 {habit.categories.map((category) => (
                   <Badge key={category.id} variant="outline">

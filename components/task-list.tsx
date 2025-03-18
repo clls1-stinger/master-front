@@ -11,14 +11,7 @@ import { fetchTasks, deleteTask } from "@/lib/data"
 import { formatDistanceToNow } from "@/lib/utils"
 import { useToast } from "@/hooks/use-toast"
 import { motion } from "framer-motion"
-
-type Task = {
-  id: number
-  title: string
-  description: string
-  creation: string
-  categories: { id: number; name: string }[]
-}
+import type { Task } from "@/lib/api"
 
 export function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([])
@@ -104,7 +97,7 @@ export function TaskList() {
                       {task.title}
                     </label>
                     <p className="text-sm text-muted-foreground">
-                      Created {formatDistanceToNow(new Date(task.creation))}
+                      Created {task.creation ? formatDistanceToNow(new Date(task.creation)) : "recently"}
                     </p>
                   </div>
                 </div>
@@ -124,7 +117,7 @@ export function TaskList() {
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       className="text-destructive focus:text-destructive"
-                      onClick={() => handleDelete(task.id)}
+                      onClick={() => task.id && handleDelete(task.id)}
                     >
                       <Trash className="mr-2 h-4 w-4" />
                       Delete
@@ -135,7 +128,7 @@ export function TaskList() {
             </div>
             <div className="py-2">
               <p className="text-sm">{task.description}</p>
-              {task.categories.length > 0 && (
+              {task.categories && task.categories.length > 0 && (
                 <div className="flex flex-wrap gap-2 mt-2">
                   {task.categories.map((category) => (
                     <Badge key={category.id} variant="morphic">
